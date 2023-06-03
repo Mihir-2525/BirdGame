@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        #sky {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            background-color: skyblue;
+            overflow: hidden;
+        }
+
+        /* Added CSS for trees, clouds, and grass */
+        #sky .tree {
+            position: absolute;
+            width: 15vw;
+            /* Use relative units for responsive sizing */
+            height: 15vw;
+            /* Use relative units for responsive sizing */
+            bottom: 0;
+            display: none;
+            background-image: url('tree.png');
+            background-size: cover;
+            z-index: 1;
+            pointer-events: none;
+            /* Disable pointer events to allow clicking on elements below */
+            transform-origin: bottom center;
+            /* Set the transform origin to the bottom center of the tree */
+            animation-name: moveTree;
+            animation-duration: 10s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes moveTree {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        #sky .cloud {
+            position: absolute;
+            width: 200px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50px;
+            opacity: 0.8;
+            animation-name: moveCloud;
+            animation-duration: 10s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes moveCloud {
+            0% {
+                left: -100px;
+            }
+
+            100% {
+                left: calc(100% + 100px);
+            }
+        }
+
+        #sky .grass {
+            position: absolute;
+            width: 100%;
+            height: 10vh;
+            bottom: 0;
+            background-image: url('grass.png');
+            background-repeat: repeat-x;
+            background-size: contain;
+            translate: 0px 32%;
+            z-index: 1;
+        }
+
+        #sky div.bird {
+            position: absolute;
+            top: 50vh;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10%;
+            height: 10%;
+            background-image: url('bird.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            display: none;
+        }
+
+        @media (max-height: 45vh) {
+            #sky div.bird {
+                top: calc(45vh - 5vh);
+            }
+        }
+
+        @media (max-height: 5vh) {
+            #sky div.bird {
+                top: 0;
+            }
+        }
+
+        #score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .plus-one {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            transition: opacity 0.5s;
+        }
+
+        .plus-one::after {
+            content: "";
+            display: block;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #cracked-point {
+            position: absolute;
+            width: 60px;
+            height: 40px;
+            background-image: url('broke.png');
+            background-size: cover;
+            display: none;
+            animation-name: crack;
+            animation-duration: 5s;
+            animation-timing-function: linear;
+        }
+
+        #message {
+            position: fixed;
+            top: 56%;
+            left: 50%;
+            transform: translate(-50%, 150%);
+            width: 200px;
+            max-height: 100px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-size: 24px;
+            text-align: center;
+            display: none;
+        }
+
+        #elon {
+            position: fixed;
+            top: 68%;
+            left: 50%;
+            height: 0;
+            z-index: 3;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            /* position: fixed;
+            top: 50%;
+            left: 70%;
+            transform: translate(-50%, 250%);
+            width: 200px;
+            height: 100px; */
+        }
+
+        /* Desktop Mode */
+        @media (min-width: 1024px) {
+            #message {
+                top: 75%;
+                transform: translate(-50%, -50%);
+                width: 400px;
+                height: 200px;
+                font-size: 36px;
+            }
+
+            #elon {
+                left: 65%;
+                top: 65%;
+                /* Additional desktop styles if needed */
+            }
+        }
+
+        #view-score-btn {
+            background-color: #2aa8df;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0px 0px 10px;
+        }
+
+        #view-score-btn:hover {
+            background-color: #2a96df;
+        }
+
+        @keyframes crack {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            1% {
+                transform: scale(2);
+                opacity: 1;
+            }
+
+            2% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #popup {
+            position: fixed;
+            z-index: 1000;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50vw;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-size: 24px;
+            text-align: center;
+            display: none;
+        }
+
+        #popup img {
+            width: 40vw;
+            margin-top: 30px;
+        }
+
+        #popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sky">
+        <!-- Added trees, clouds, and grass -->
+        <div class="tree" style="left: -20%;"></div>
+        <div class="tree" style="left: 10%;"></div>
+        <div class="tree" style="left: 40%;"></div>
+        <div class="tree" style="left: 70%;"></div>
+        <div class="tree" style="left: 100%;"></div>
+
+        <div class="cloud" style="top: 15%;"></div>
+        <div class="cloud" style="top: 21%;"></div>
+        <div class="cloud" style="top: 30%;"></div>
+        <div class="cloud" style="top: 37%;"></div>
+
+        <div class="grass"></div>
+
+        <!-- Birds will appear here -->
+    </div>
+    <div class="road" style="position: relative;">
+        <img src="./road.jpg"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: auto; min-width: 100%; min-height: 40vh; max-height: 40vh;"
+            alt="">
+    </div>
+
+    <div id="score">Score: 0</div>
+    <div id="cracked-point"></div>
+    <div id="message"></div>
+    <div id="elon"></div>
+    <!-- <button id="view-score-btn" onclick="viewScore()">View Score</button> -->
+    <div id="popup">
+        <span class="close-btn">&times;</span>
+        <img src="em.jpg" alt="Alert">
+        <p>No activity detected. Please click to continue!</p>
+    </div>
+
+    <audio id="gunshot-audio">
+        <source src="Gunshot.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="gunshot-audio2">
+        <source src="Gunshot2.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var sky = document.getElementById("sky");
+            var scoreDisplay = document.getElementById("score");
+            var score = 0;
+            var point = document.getElementById("cracked-point");
+            var brokenImages = ['broke.png', 'broke1.png', 'broke2.png'];
+            var gunshotAudio = document.getElementById("gunshot-audio");
+            var popup = document.getElementById("popup");
+            var inactiveTimer;
+            var closeButton = document.querySelector("#popup .close-btn");
+
+            closeButton.addEventListener("click", function () {
+                popup.style.display = "none";
+                resetInactiveTimer(); // Reset the idle time when the popup is closed manually
+            });
+
+            var idleTime = 0;
+
+            function resetIdleTime() {
+                idleTime = 0;
+            }
+
+            function showPopup() {
+                popup.style.display = "block";
+            }
+
+            function hidePopup() {
+                popup.style.display = "none";
+                resetInactiveTimer();
+            }
+
+            function resetInactiveTimer() {
+                clearTimeout(inactiveTimer);
+                inactiveTimer = setTimeout(showPopup, 10000); // Set timeout for 10 seconds
+            }
+
+            setInterval(function () {
+                idleTime += 1;
+                if (idleTime >= 10) {
+                    popup.style.display = "block";
+                }
+            }, 1000);
+
+            document.addEventListener("click", function () {
+                resetIdleTime();
+                hidePopup();
+            });
+
+            resetInactiveTimer();
+
+            // Function to play gunshot sound based on whether a bird was clicked or not
+            function playGunshotSound(isBirdClicked) {
+                var gunshotAudio = isBirdClicked ? document.getElementById("gunshot-audio") : document.getElementById("gunshot-audio2");
+                gunshotAudio.currentTime = 0;
+                gunshotAudio.play();
+            }
+
+            // Function to create a bird element and handle click events
+            function createBird() {
+                var bird = document.createElement("div");
+                bird.className = "bird";
+                var isClicked = false;
+
+                bird.addEventListener("click", function () {
+                    if (!isClicked) {
+                        bird.style.backgroundImage = "url('birddie.png')";
+                        score++;
+                        scoreDisplay.innerText = "Score: " + score;
+
+                        isClicked = true;
+                        bird.style.pointerEvents = "none";
+                        bird.style.cursor = "default";
+
+                        var plusOne = document.createElement("div");
+                        plusOne.className = "plus-one";
+                        plusOne.innerText = "+1";
+                        sky.appendChild(plusOne);
+
+                        if (score % 10 == 0 && score != 0) {
+                            viewScore();
+                        }
+                        // Set the position of the plusOne element
+                        var birdRect = bird.getBoundingClientRect();
+                        var skyRect = sky.getBoundingClientRect();
+                        plusOne.style.left = (birdRect.left - skyRect.left + birdRect.width / 2 - plusOne.offsetWidth / 2) + "px";
+                        plusOne.style.top = (birdRect.top - skyRect.top) + "px";
+                        plusOne.style.color = "darkblue";
+
+                        setTimeout(function () {
+                            bird.style.backgroundImage = "url('em.jpg')";
+                            bird.style.pointerEvents = "auto";
+                            bird.style.cursor = "pointer";
+                            sky.removeChild(bird);
+                            sky.removeChild(plusOne);
+                        }, 300);
+
+                        playGunshotSound(true); // Play Gunshot.mp3
+                    } else {
+                        playGunshotSound(false); // Play Gunshot2.mp3
+                    }
+                });
+
+                return bird;
+            }
+
+            // Function to create and move a bird across the sky
+            function moveBird() {
+                var bird = createBird();
+                sky.appendChild(bird);
+
+                var x = Math.floor(Math.random() * (window.innerWidth - bird.offsetWidth));
+                var y = Math.floor(Math.random() * (window.innerHeight * 0.4)) + (window.innerHeight * 0.05);
+                bird.style.left = x + "px";
+                bird.style.top = y + "px";
+                bird.style.display = "block";
+
+                setTimeout(function () {
+                    bird.style.display = "none";
+                    sky.removeChild(bird);
+                }, 3000);
+            }
+
+            setInterval(moveBird, 2000);
+
+            // Function to check if a bird was clicked based on the provided coordinates
+            function isBirdClicked(x, y) {
+                var birds = document.getElementsByClassName("bird");
+                for (var i = 0; i < birds.length; i++) {
+                    var birdRect = birds[i].getBoundingClientRect();
+                    if (x >= birdRect.left && x <= birdRect.right && y >= birdRect.top && y <= birdRect.bottom) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            function handleClick(event) {
+                var x = event.clientX;
+                var y = event.clientY;
+                var imageIndex = score % brokenImages.length;
+
+                point.style.backgroundImage = "url('" + brokenImages[imageIndex] + "')";
+                point.style.left = (x - 20) + "px";
+                point.style.top = (y - 20) + "px";
+                point.style.display = "block";
+
+                if (point.style.backgroundImage.includes("em.jpg")) {
+                    score = 0;
+                    scoreDisplay.innerText = "Score: " + score;
+                }
+                if (isBirdClicked(x, y)) {
+                    playGunshotSound(true); // Play Gunshot.mp3
+                } else {
+                    playGunshotSound(false); // Play Gunshot2.mp3
+                }
+                resetInactiveTimer();
+            }
+
+
+            function showPopup() {
+                popup.style.display = "block";
+            }
+
+            function hidePopup() {
+                popup.style.display = "none";
+                resetInactiveTimer();
+            }
+
+            function resetInactiveTimer() {
+                clearTimeout(inactiveTimer);
+                inactiveTimer = setTimeout(showPopup, 10000); // Set timeout for 10 seconds
+            }
+
+            document.addEventListener("click", handleClick);
+
+            popup.addEventListener("click", function () {
+                hidePopup();
+            });
+
+            resetInactiveTimer();
+        });
+
+        function viewScore() {
+            var score = document.getElementById("score").innerText;
+            var message = document.getElementById("message");
+            var elon = document.getElementById("elon");
+
+            elon.innerHTML = "<img style=\"max-height:250px\" src=\"./em2.jpg\" alt=\"\">";
+            message.innerText = "Congratulations! Your " + score + " points.";
+            message.style.display = "block";
+            elon.style.display = "block";
+            setTimeout(function () {
+                message.style.display = "none";
+                elon.style.display = "none";
+            }, 5000);
+        }
+
+        // JavaScript code to show the trees
+        var trees = document.querySelectorAll("#sky .tree");
+        trees.forEach(function (tree) {
+            tree.style.display = "block";
+        });
+    </script>
+</body>
+
+</html>
