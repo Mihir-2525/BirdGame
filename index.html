@@ -26,7 +26,7 @@
             /* Use relative units for responsive sizing */
             bottom: 0;
             display: none;
-            background-image: url('tree.png');
+            background-image: url('./Image/tree.png');
             background-size: cover;
             z-index: 1;
             pointer-events: none;
@@ -52,12 +52,15 @@
         #sky .cloud {
             position: absolute;
             width: 200px;
-            height: 50px;
-            background-color: white;
+            height: 35vh;
+            /* background-color: white; */
             border-radius: 50px;
+            background-image: url('./Image/cloud.png');
             opacity: 0.8;
             animation-name: moveCloud;
-            animation-duration: 10s;
+            background-repeat: repeat-x;
+            background-size: contain;
+            animation-duration: 20s;
             animation-timing-function: linear;
             animation-iteration-count: infinite;
         }
@@ -77,7 +80,7 @@
             width: 100%;
             height: 10vh;
             bottom: 0;
-            background-image: url('grass.png');
+            background-image: url('./Image/grass.png');
             background-repeat: repeat-x;
             background-size: contain;
             translate: 0px 32%;
@@ -91,7 +94,7 @@
             transform: translate(-50%, -50%);
             width: 10%;
             height: 10%;
-            background-image: url('bird.png');
+            background-image: url('./Image/bird.png');
             background-size: contain;
             background-repeat: no-repeat;
             cursor: pointer;
@@ -144,7 +147,7 @@
             position: absolute;
             width: 60px;
             height: 40px;
-            background-image: url('broke.png');
+            background-image: url('./Image/broke.png');
             background-size: cover;
             display: none;
             animation-name: crack;
@@ -257,6 +260,48 @@
             font-size: 24px;
             cursor: pointer;
         }
+
+        #car {
+            top: 7vh;
+            left: 0;
+            width: 200px;
+            height: 150px;
+            background-image: url('./Image/car.png');
+            background-size: cover;
+            transition: background-image 1s;
+            cursor: pointer;
+        }
+
+        .car {
+            position: absolute;
+            top: 7vh;
+            left: 0;
+            transform: translate(-50%);
+            width: 35%;
+            max-width: 350px;
+            height: auto;
+            background-image: url('./Image/car.png');
+            background-size: cover;
+            cursor: pointer;
+        }
+
+        .car.move {
+            animation-name: moveCar;
+            animation-duration: 2s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+
+
+        @keyframes moveCar {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(85vw);
+            }
+        }
     </style>
 </head>
 
@@ -269,19 +314,20 @@
         <div class="tree" style="left: 70%;"></div>
         <div class="tree" style="left: 100%;"></div>
 
-        <div class="cloud" style="top: 15%;"></div>
-        <div class="cloud" style="top: 21%;"></div>
-        <div class="cloud" style="top: 30%;"></div>
-        <div class="cloud" style="top: 37%;"></div>
+        <div class="cloud" style="top: 10%;"></div>
+        <div class="cloud" style="top: 1%;"></div>
+        <div class="cloud" style="top: -6%;"></div>
+        <div class="cloud" style="top: 17%;"></div>
 
         <div class="grass"></div>
 
         <!-- Birds will appear here -->
     </div>
     <div class="road" style="position: relative;">
-        <img src="./road.jpg"
+        <img src="./Image/road.jpg"
             style="position: absolute; top: 0; left: 0; width: 100%; height: auto; min-width: 100%; min-height: 40vh; max-height: 40vh;"
             alt="">
+        <img id="car" class="car" src="./Image/car.png" alt="" onclick="playDialogue()">
     </div>
 
     <div id="score">Score: 0</div>
@@ -291,29 +337,44 @@
     <!-- <button id="view-score-btn" onclick="viewScore()">View Score</button> -->
     <div id="popup">
         <span class="close-btn">&times;</span>
-        <img src="em.jpg" alt="Alert">
+        <img src="./Image/em.jpg" alt="Alert">
         <p>No activity detected. Please click to continue!</p>
     </div>
 
     <audio id="gunshot-audio">
-        <source src="Gunshot.mp3" type="audio/mpeg">
+        <source src="./music/Gunshot.mp3" type="audio/mpeg">
     </audio>
     <audio id="gunshot-audio2">
-        <source src="Gunshot2.mp3" type="audio/mpeg">
+        <source src="./music/Gunshot2.mp3" type="audio/mpeg">
     </audio>
-
+    <!-- <script src="./cloud.js"></script> -->
     <script>
+        function playDialogue() {
+            var audio = new Audio('./music/dailoug1.mp3');
+            audio.play();
+        }
         document.addEventListener("DOMContentLoaded", function () {
             var sky = document.getElementById("sky");
             var scoreDisplay = document.getElementById("score");
             var score = 0;
             var point = document.getElementById("cracked-point");
-            var brokenImages = ['broke.png', 'broke1.png', 'broke2.png'];
+            var brokenImages = ['./Image/broke.png', './Image/broke1.png', './Image/broke2.png'];
             var gunshotAudio = document.getElementById("gunshot-audio");
             var popup = document.getElementById("popup");
             var inactiveTimer;
             var closeButton = document.querySelector("#popup .close-btn");
+            var car = document.getElementById("car");
 
+            car.addEventListener("click", function () {
+                car.classList.add("move");
+                car.style.pointerEvents = "none";
+
+                // Wait for the animation to complete
+                setTimeout(function () {
+                    car.classList.remove("move");
+                    car.style.pointerEvents = "auto";
+                }, 2000);
+            });
             closeButton.addEventListener("click", function () {
                 popup.style.display = "none";
                 resetInactiveTimer(); // Reset the idle time when the popup is closed manually
@@ -368,7 +429,7 @@
 
                 bird.addEventListener("click", function () {
                     if (!isClicked) {
-                        bird.style.backgroundImage = "url('birddie.png')";
+                        bird.style.backgroundImage = "url('./Image/birddie.png')";
                         score++;
                         scoreDisplay.innerText = "Score: " + score;
 
@@ -392,7 +453,7 @@
                         plusOne.style.color = "darkblue";
 
                         setTimeout(function () {
-                            bird.style.backgroundImage = "url('em.jpg')";
+                            bird.style.backgroundImage = "url('./Image/em.jpg')";
                             bird.style.pointerEvents = "auto";
                             bird.style.cursor = "pointer";
                             sky.removeChild(bird);
@@ -449,7 +510,7 @@
                 point.style.top = (y - 20) + "px";
                 point.style.display = "block";
 
-                if (point.style.backgroundImage.includes("em.jpg")) {
+                if (point.style.backgroundImage.includes("./Image/em.jpg")) {
                     score = 0;
                     scoreDisplay.innerText = "Score: " + score;
                 }
@@ -490,7 +551,7 @@
             var message = document.getElementById("message");
             var elon = document.getElementById("elon");
 
-            elon.innerHTML = "<img style=\"max-height:250px\" src=\"./em2.jpg\" alt=\"\">";
+            elon.innerHTML = "<img style=\"max-height:250px\" src=\"./Image/em2.jpg\" alt=\"\">";
             message.innerText = "Congratulations! Your " + score + " points.";
             message.style.display = "block";
             elon.style.display = "block";
@@ -505,6 +566,7 @@
         trees.forEach(function (tree) {
             tree.style.display = "block";
         });
+
     </script>
 </body>
 
