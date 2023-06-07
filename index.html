@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <title>Birds Killer</title>
+    <link rel="icon" href="./Image/birddie.png" type="image/png">
     <style>
         body {
             margin: 0;
@@ -268,7 +270,7 @@
             height: 150px;
             background-image: url('./Image/car.png');
             background-size: cover;
-            transition: background-image 1s;
+            transition: background-image 0.1s;
             cursor: pointer;
         }
 
@@ -280,14 +282,14 @@
             width: 35%;
             max-width: 350px;
             height: auto;
-            background-image: url('./Image/car.png');
+            /* background-image: url('./Image/car.png'); */
             background-size: cover;
             cursor: pointer;
         }
 
         .car.move {
             animation-name: moveCar;
-            animation-duration: 2s;
+            animation-duration: 5s;
             animation-timing-function: linear;
             animation-fill-mode: forwards;
         }
@@ -299,7 +301,7 @@
             }
 
             100% {
-                transform: translateX(85vw);
+                transform: translateX(82vw);
             }
         }
     </style>
@@ -327,7 +329,7 @@
         <img src="./Image/road.jpg"
             style="position: absolute; top: 0; left: 0; width: 100%; height: auto; min-width: 100%; min-height: 40vh; max-height: 40vh;"
             alt="">
-        <img id="car" class="car" src="./Image/car.png" alt="" onclick="playDialogue()">
+        <div id="car" class="car"  alt="" onclick="playDialogue()"></div>
     </div>
 
     <div id="score">Score: 0</div>
@@ -364,17 +366,19 @@
             var inactiveTimer;
             var closeButton = document.querySelector("#popup .close-btn");
             var car = document.getElementById("car");
-
             car.addEventListener("click", function () {
                 car.classList.add("move");
                 car.style.pointerEvents = "none";
+                // car.style.backgroundImage = "url('./Image/carclick.png')";
 
                 // Wait for the animation to complete
                 setTimeout(function () {
                     car.classList.remove("move");
                     car.style.pointerEvents = "auto";
-                }, 2000);
+                    car.style.backgroundImage = "url('./Image/car.png')";
+                }, 5000);
             });
+
             closeButton.addEventListener("click", function () {
                 popup.style.display = "none";
                 resetInactiveTimer(); // Reset the idle time when the popup is closed manually
