@@ -213,6 +213,10 @@
             }
         }
 
+        #score{
+            color: black;
+        }
+
         #popup {
             position: fixed;
             z-index: 1000;
@@ -421,6 +425,9 @@
 
                         var plusOne = document.createElement("div");
                         plusOne.className = "plus-one";
+                        plusOne.style.color = "blue";
+                        plusOne.style.marginLeft = "75px"; 
+                        plusOne.style.fontSize = "50px";
                         plusOne.innerText = "+1";
                         sky.appendChild(plusOne);
 
