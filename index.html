@@ -159,49 +159,27 @@
 
         #message {
             position: fixed;
-            top: 70%;
-            left: 20%;
+            top: 81%;
+            left: 50%;
             transform: translate(-50%, 150%);
-            width: 200px;
-            max-height: 100px;
-            background-color: rgba(0, 0, 0, 0.8);
+            max-height: 50vw;
+            max-width: 50vw;
+            background-color: rgba(0, 0, 0, 0.9);
             color: #fff;
-            font-size: 24px;
+            font-size: 46px;
             text-align: center;
+            z-index: 5;
             display: none;
         }
 
         #elon {
             position: fixed;
             top: 68%;
-            left: 60%;
+            left: 25%;
             height: 0;
             z-index: 3;
             display: none;
             background-color: rgba(0, 0, 0, 0.8);
-            /* position: fixed;
-            top: 50%;
-            left: 70%;
-            transform: translate(-50%, 250%);
-            width: 200px;
-            height: 100px; */
-        }
-
-        /* Desktop Mode */
-        @media (min-width: 1024px) {
-            #message {
-                top: 75%;
-                transform: translate(-50%, -50%);
-                width: 400px;
-                height: 200px;
-                font-size: 36px;
-            }
-
-            #elon {
-                left: 65%;
-                top: 65%;
-                /* Additional desktop styles if needed */
-            }
         }
 
         #view-score-btn {
@@ -329,7 +307,7 @@
         <img src="./Image/road.jpg"
             style="position: absolute; top: 0; left: 0; width: 100%; height: auto; min-width: 100%; min-height: 40vh; max-height: 40vh;"
             alt="">
-        <div id="car" class="car"  alt="" onclick="playDialogue()"></div>
+        <div id="car" class="car" alt="" onclick="playDialogue()"></div>
     </div>
 
     <div id="score">Score: 0</div>
@@ -555,14 +533,14 @@
             var message = document.getElementById("message");
             var elon = document.getElementById("elon");
 
-            elon.innerHTML = "<img style=\"max-height:250px\" src=\"./Image/em2.jpg\" alt=\"\">";
+            elon.innerHTML = "<img style=\"max-width:50vw\" src=\"./Image/em2.jpg\" alt=\"\">";
             message.innerText = "Congratulations! Your " + score + " points.";
             message.style.display = "block";
             elon.style.display = "block";
             setTimeout(function () {
                 message.style.display = "none";
                 elon.style.display = "none";
-            }, 5000);
+            }, 3000);
         }
 
         // JavaScript code to show the trees
