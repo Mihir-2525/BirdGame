@@ -2,7 +2,7 @@
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 1001;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -10,11 +10,7 @@
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.modal-content {
-    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 3);
 }
 
 .modal h2 {
@@ -23,7 +19,7 @@
 }
 
 .modal input {
-    width: 100%;
+    width: 93%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
