@@ -1,0 +1,297 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+#sky {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    background-color: skyblue;
+    overflow: hidden;
+}
+
+/* Added CSS for trees, clouds, and grass */
+#sky .tree {
+    position: absolute;
+    width: 15vw;
+    /* Use relative units for responsive sizing */
+    height: 15vw;
+    /* Use relative units for responsive sizing */
+    bottom: 0;
+    display: none;
+    background-image: url('./Image/tree.png');
+    background-size: cover;
+    z-index: 1;
+    pointer-events: none;
+    /* Disable pointer events to allow clicking on elements below */
+    transform-origin: bottom center;
+    /* Set the transform origin to the bottom center of the tree */
+    animation-name: moveTree;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes moveTree {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+#sky .cloud {
+    position: absolute;
+    width: 200px;
+    height: 35vh;
+    /* background-color: white; */
+    border-radius: 50px;
+    background-image: url('./Image/cloud.png');
+    opacity: 0.8;
+    animation-name: moveCloud;
+    background-repeat: repeat-x;
+    background-size: contain;
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes moveCloud {
+    0% {
+        left: -100px;
+    }
+
+    100% {
+        left: calc(100% + 100px);
+    }
+}
+
+#sky .grass {
+    position: absolute;
+    width: 100%;
+    height: 10vh;
+    bottom: 0;
+    background-image: url('./Image/grass.png');
+    background-repeat: repeat-x;
+    background-size: contain;
+    translate: 0px 32%;
+    z-index: 1;
+}
+
+#sky div.bird {
+    position: absolute;
+    top: 50vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10%;
+    height: 10%;
+    background-image: url('./Image/bird.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: none;
+}
+
+@media (max-height: 45vh) {
+    #sky div.bird {
+        top: calc(45vh - 5vh);
+    }
+}
+
+@media (max-height: 5vh) {
+    #sky div.bird {
+        top: 0;
+    }
+}
+
+#score {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.plus-one {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    transition: opacity 0.5s;
+}
+
+.plus-one::after {
+    content: "";
+    display: block;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+#cracked-point {
+    position: absolute;
+    width: 60px;
+    height: 40px;
+    background-image: url('./Image/broke.png');
+    background-size: cover;
+    display: none;
+    animation-name: crack;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+}
+
+#message {
+    position: fixed;
+    top: 81%;
+    left: 50%;
+    transform: translate(-50%, 150%);
+    max-height: 50vw;
+    max-width: 50vw;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    font-size: 46px;
+    text-align: center;
+    z-index: 5;
+    display: none;
+}
+
+#elon {
+    position: fixed;
+    top: 68%;
+    left: 25%;
+    height: 0;
+    z-index: 3;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#view-score-btn {
+    background-color: #2aa8df;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px 0px 0px 10px;
+}
+
+#view-score-btn:hover {
+    background-color: #2a96df;
+}
+
+@keyframes crack {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    1% {
+        transform: scale(2);
+        opacity: 1;
+    }
+
+    2% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#score {
+    color: black;
+}
+
+#popup {
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    display: none;
+}
+
+#popup img {
+    width: 40vw;
+    margin-top: 30px;
+}
+
+#popup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#car {
+    top: 7vh;
+    left: 0;
+    width: 200px;
+    height: 150px;
+    background-image: url('./Image/car.png');
+    background-size: cover;
+    transition: background-image 0.1s;
+    cursor: pointer;
+}
+
+.car {
+    position: absolute;
+    top: 7vh;
+    left: 0;
+    transform: translate(-50%);
+    width: 35%;
+    max-width: 350px;
+    height: auto;
+    /* background-image: url('./Image/car.png'); */
+    background-size: cover;
+    cursor: pointer;
+}
+
+.car.move {
+    animation-name: moveCar;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes moveCar {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(80vw);
+    }
+}
+
+/*  Add Score button */
+.addscore {
+    position: relative;
+    min-height: 3vh;
+    min-width: 7vh;
+    background-color: #33b4ff80;
+    border: solid 1px darkblue;
+    padding: 10px;
+    font-size: 25px;
+    font-family: cursive;
+    font-weight: bold;
+    margin: 2px;
+    color: #000053;
+    border-radius: 25px;
+}

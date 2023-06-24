@@ -1,0 +1,59 @@
+/* Add CSS styles for the modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    margin-bottom: 20px;
+}
+
+.modal h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.modal button {
+    width: 100%;
+    background-color: #2aa8df;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    background-color: #2a96df;
+}
+
+.modal .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #aaa;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal .close:hover {
+    color: #555;
+}
