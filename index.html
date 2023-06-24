@@ -3,6 +3,7 @@
 
 <head>
     <title>Birds Killer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="icon" href="./Image/birddie.png" type="image/png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="modal.css">
@@ -10,16 +11,16 @@
 
 <body>
     <div id="sky">
-    <button id="add-score-btn" class="addscore">Add Score</button>
-    <div id="score-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Score</h2>
-            <input type="text" id="player-name" placeholder="Name">
-            <input type="number" id="player-score" placeholder="Score">
-            <button id="save-score-btn">Save</button>
+        <button id="add-score-btn" class="addscore">Add Score</button>
+        <div id="score-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Add Score</h2>
+                <input type="text" id="player-name" placeholder="Name">
+                <input type="number" id="player-score" placeholder="Score">
+                <button id="save-score-btn">Save</button>
+            </div>
         </div>
-    </div>
         <!-- Added trees, clouds, and grass -->
         <div class="tree" style="left: -20%;"></div>
         <div class="tree" style="left: 10%;"></div>
@@ -62,6 +63,19 @@
     <script src="modaldata.js"></script>
     <script src="script.js"></script>
     <script src="firebase.js"></script>
+    <script>
+        // Disable zooming on double-tap
+        (function () {
+            var lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        })();
+    </script>
 </body>
 
 </html>
