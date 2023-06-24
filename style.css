@@ -283,14 +283,12 @@ body {
 /*  Add Score button */
 .addscore {
     position: relative;
-    /* min-height: 3vh; */
-    /* min-width: 7vh; */
-    max-width: 8vh;
+    min-height: 3vh;
+    min-width: 7vh;
     max-height: 5vh;
+    max-width: 8vh;
     background-color: #33b4ff47;
     border: solid 1px darkblue;
-    padding: 5px;
-    font-size: 3vw;
     font-family: cursive;
     font-weight: bold;
     margin: 2px;
