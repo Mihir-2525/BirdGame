@@ -4,14 +4,18 @@
 <head>
     <title>Birds Killer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="icon" href="./Image/birddie.png" type="image/png">
+    <link rel="icon" href="./Image/bird.png" type="image/png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="modal.css">
 </head>
 
 <body>
     <div id="sky">
-        <button id="add-score-btn" class="addscore">Add Score</button>
+        <!--
+            It use for save data into firebase...
+            Highest marks are shown in top right corner upper User Score
+            
+            <button id="add-score-btn" class="addscore">Add Score</button>
         <div id="score-modal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -20,7 +24,7 @@
                 <input type="number" id="player-score" placeholder="Score">
                 <button id="save-score-btn">Save</button>
             </div>
-        </div>
+        </div> -->
         <!-- Added trees, clouds, and grass -->
         <div class="tree" style="left: -20%;"></div>
         <div class="tree" style="left: 10%;"></div>
@@ -45,15 +49,18 @@
     </div>
     <div id="score">Score: 0</div>
     <div id="cracked-point"></div>
-    <div id="message"></div>
     <div id="elon"></div>
+    <div id="message"></div>
     <!-- <button id="view-score-btn" onclick="viewScore()">View Score</button> -->
     <div id="popup">
         <span class="close-btn">&times;</span>
         <img src="./Image/em.jpg" alt="Alert">
-        <p>No activity detected. Please click to continue!</p>
+        <p style="font-size: 5vw;">No activity detected.</p>
     </div>
 
+    <audio id="alert-audio">
+        <source src="./music/alert.mp3" type="audio/mpeg">
+    </audio>
     <audio id="gunshot-audio">
         <source src="./music/Gunshot.mp3" type="audio/mpeg">
     </audio>
@@ -62,7 +69,6 @@
     </audio>
     <script src="modaldata.js"></script>
     <script src="script.js"></script>
-    <script src="firebase.js"></script>
     <script>
         // Disable zooming on double-tap
         (function () {

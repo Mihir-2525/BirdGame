@@ -87,8 +87,8 @@ body {
     top: 50vh;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 10%;
-    height: 10%;
+    width: 12%;
+    height: 12%;
     background-image: url('./Image/bird.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -152,14 +152,13 @@ body {
 
 #message {
     position: fixed;
-    top: 81%;
+    top: 86%;
     left: 50%;
     transform: translate(-50%, 150%);
     max-height: 50vw;
     max-width: 50vw;
     background-color: rgba(0, 0, 0, 0.9);
     color: #fff;
-    font-size: 46px;
     text-align: center;
     z-index: 5;
     display: none;
@@ -167,7 +166,7 @@ body {
 
 #elon {
     position: fixed;
-    top: 68%;
+    top: 65%;
     left: 25%;
     height: 0;
     z-index: 3;

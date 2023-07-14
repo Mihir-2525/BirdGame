@@ -82,6 +82,8 @@ document.addEventListener("DOMContentLoaded", function () {
         bird.addEventListener("click", function () {
             if (!isClicked) {
                 bird.style.backgroundImage = "url('./Image/birddie.png')";
+                bird.style.width = "7%";
+                bird.style.paddingLeft = "12px";
                 score++;
                 scoreDisplay.innerText = "Score: " + score;
 
